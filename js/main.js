@@ -121,7 +121,9 @@ function viewHome(){
   from = {href:"#home", label:"Home"};
   const tiles = MOODS.map(m => {
     const n = PLACES.filter(p => inMood(p, m.id)).length;
-    const a = h("a", {class:"tile", href:"#mood-" + m.id}, art("tile-" + m.id, m.id), h("b", {text:m.name}), h("span", {text:m.hint + " (" + n + " places)"}));
+    const bgArt = art("tile-" + m.id, m.id); bgArt.setAttribute("class", "art");
+    const a = h("a", {class:"tile", href:"#mood-" + m.id}, bgArt, h("b", {text:m.name}), h("span", {text:m.hint + " (" + n + " places)"}));
+    a.style.background = m.color;
     return a;
   });
   const pop = PLACES.filter(p => p.popular);
