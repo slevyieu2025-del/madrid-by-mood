@@ -162,3 +162,4 @@ button{font:inherit;color:inherit;}
 .foot a{display:inline-flex;align-items:center;min-height:44px;font-weight:500;}
 .badge{display:inline-block;min-width:1.4em;margin-left:6px;padding:0 6px;border-radius:99px;background:var(--text);color:var(--bg);font-size:.8rem;line-height:1.5;text-align:center;}
 .nav a[aria-current="page"] .badge{background:var(--bg);color:var(--text);}
+.badge[hidden]{display:none;}
