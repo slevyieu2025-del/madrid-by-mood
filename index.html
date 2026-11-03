@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Madrid by Mood</title>
+<meta name="description" content="A mood-based guide to Madrid for university students. Pick a feeling, get a short list of real places.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#home">Madrid by Mood</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <ul>
+        <li><a href="#home" data-nav="home">Home</a></li>
+        <li><a href="#explore" data-nav="explore">Explore</a></li>
+        <li><a href="#saved" data-nav="saved">Saved<span class="badge" id="savedCount" hidden></span></a></li>
+        <li><a href="#about" data-nav="about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <div id="app" class="wrap">
+    <noscript><p class="note">Madrid by Mood needs JavaScript to show its places. Please turn it on and reload.</p></noscript>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div>
+      <b>Madrid by Mood</b>
+      <p>A short, hand-picked guide to Madrid for university students. Prices are approximate, so confirm before you go.</p>
+    </div>
+    <ul>
+      <li><a href="#explore">Explore</a></li>
+      <li><a href="#saved">Saved</a></li>
+      <li><a href="#about">About and credits</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="sr-only" role="status" aria-live="polite" id="live"></div>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+"use strict";
+/* ---------- Data ---------- */
+const MOODS = [
+  {id:"relax",   name:"Relax",    hint:"Slow down between classes",         color:"var(--relax)",   head:"Need to relax? Try these places.",              sub:"Quiet gardens, warm water and long views."},
+  {id:"nature",  name:"Nature",   hint:"Trees, rivers and fresh air",       color:"var(--nature)",  head:"Want some nature? Try these places.",           sub:"Green space that is easy to reach on the metro."},
+  {id:"social",  name:"Social",   hint:"Good company, good food",           color:"var(--social)",  head:"Feeling social? Try these places.",             sub:"Squares, markets and tables made for groups."},
+  {id:"romantic",name:"Romantic", hint:"Sunsets, views and sweet things",   color:"var(--romantic)",head:"Feeling romantic? Try these places.",           sub:"Golden-hour spots for two."},
+  {id:"hidden",  name:"Hidden",   hint:"Places most visitors skip",         color:"var(--hidden)",  head:"Want something hidden? Try these places.",      sub:"Quieter corners of the city."},
+  {id:"free",    name:"Free",     hint:"Costs nothing",                     color:"var(--free)",    head:"Want it free? These places cost nothing.",      sub:"Every place here has a price of zero."}
+];
+const MOOD = Object.fromEntries(MOODS.map(m => [m.id, m]));
+
+const PLACES = [
+  {id:"palacio-de-cristal", name:"Palacio de Cristal", moods:["relax"], area:"Retiro", price:0, priceLabel:"Free",
+   desc:"A glass-and-iron pavilion beside a small pond inside Retiro Park. Bring a book and let an hour disappear.",
+   tip:"Go on a weekday morning, when it is quietest.", q:"Palacio de Cristal Parque del Retiro Madrid", popular:false},
+  {id:"jardines-de-sabatini", name:"Sabatini Gardens", moods:["relax"], area:"Palacio Real", price:0, priceLabel:"Free",
+   desc:"Neat hedges, fountains and statues right beside the Royal Palace, with a calm that feels far from the centre.",
+   tip:"Mornings are the most peaceful.", q:"Jardines de Sabatini Madrid", popular:false},
+  {id:"templo-de-debod", name:"Templo de Debod", moods:["relax","romantic"], area:"Moncloa", price:0, priceLabel:"Free",
+   desc:"An ancient Egyptian temple rebuilt in a Madrid park, with a wide pool and one of the best sunset views in the city.",
+   tip:"Arrive about 30 minutes before sunset to get a good spot.", q:"Templo de Debod Madrid", popular:true},
+  {id:"hammam-al-andalus", name:"Hammam Al Ándalus", moods:["relax"], area:"Centro", price:35, priceLabel:"About €35 and up",
+   desc:"Warm pools, steam and candlelight in a modern take on an Arab bath. A proper treat after exam week.",
+   tip:"Book ahead, especially at weekends.", q:"Hammam Al Ándalus Madrid", popular:false},
+
+  {id:"casa-de-campo", name:"Casa de Campo", moods:["nature"], area:"West Madrid", price:0, priceLabel:"Free",
+   desc:"Madrid’s biggest park, far larger than Retiro. Rent a bike, walk the trails or head for the lake.",
+   tip:"Take the metro to Lago or Batán and plan a full afternoon.", q:"Casa de Campo Madrid", popular:false},
+  {id:"madrid-rio", name:"Madrid Río", moods:["nature"], area:"Manzanares river", price:0, priceLabel:"Free",
+   desc:"A long riverside park with cycle paths, bridges, playgrounds and shade, built where a motorway used to run.",
+   tip:"Walk from Puente de Segovia towards Matadero.", q:"Madrid Río Madrid", popular:false},
+  {id:"real-jardin-botanico", name:"Real Jardín Botánico", moods:["nature","relax"], area:"Retiro", price:6, priceLabel:"About €6",
+   desc:"An 18th-century botanical garden tucked beside the Prado. Tidy terraces, greenhouses and plenty of benches.",
+   tip:"Best in spring and early autumn.", q:"Real Jardín Botánico Madrid", popular:false},
+  {id:"rosaleda-parque-del-oeste", name:"La Rosaleda", moods:["nature"], area:"Parque del Oeste", price:0, priceLabel:"Free",
+   desc:"A rose garden inside Parque del Oeste, with paths that run down towards the Templo de Debod.",
+   tip:"The roses are at their best around May and June.", q:"La Rosaleda Parque del Oeste Madrid", popular:false},
+
+  {id:"plaza-del-dos-de-mayo", name:"Plaza del Dos de Mayo", moods:["social"], area:"Malasaña", price:0, priceLabel:"Free",
+   desc:"A small square where students and neighbours gather on warm evenings, with bars and terraces all around.",
+   tip:"Bring a drink from a nearby shop and sit with friends.", q:"Plaza del Dos de Mayo Madrid", popular:false},
+  {id:"el-rastro", name:"El Rastro", moods:["social"], area:"La Latina", price:0, priceLabel:"Free",
+   desc:"Madrid’s big open-air flea market. Browse vintage finds, then settle into a nearby bar for tapas.",
+   tip:"It runs on Sundays and public holidays. Go early, before the crowds.", q:"El Rastro Madrid", popular:true},
+  {id:"mercado-de-san-anton", name:"Mercado de San Antón", moods:["social"], area:"Chueca", price:10, priceLabel:"About €10",
+   desc:"A food market with stalls to graze across and a terrace on the top floor. Good for sharing plates.",
+   tip:"Order a few small plates between you rather than one big meal.", q:"Mercado de San Antón Madrid", popular:false},
+  {id:"lavapies-argumosa", name:"Calle de Argumosa", moods:["social"], area:"Lavapiés", price:8, priceLabel:"About €8",
+   desc:"A street of terraces in one of the city’s most mixed neighbourhoods. Cheap drinks and food from many places.",
+   tip:"Walk the surrounding streets too; the food is varied.", q:"Calle de Argumosa Madrid", popular:false},
+
+  {id:"faro-de-moncloa", name:"Faro de Moncloa", moods:["romantic"], area:"Moncloa", price:4, priceLabel:"About €4",
+   desc:"A viewing tower with a 360-degree look over the rooftops towards the sierra.",
+   tip:"Check that it is open before you set out.", q:"Faro de Moncloa Madrid", popular:false},
+  {id:"circulo-de-bellas-artes", name:"Círculo de Bellas Artes rooftop", moods:["romantic"], area:"Centro", price:5, priceLabel:"About €5",
+   desc:"A roof terrace with a view down Alcalá and across the skyline, best at golden hour.",
+   tip:"Go just before sunset and stay for the lights.", q:"Círculo de Bellas Artes azotea Madrid", popular:false},
+  {id:"chocolateria-san-gines", name:"Chocolatería San Ginés", moods:["romantic","social"], area:"Sol", price:7, priceLabel:"About €7",
+   desc:"Churros and thick hot chocolate in an old Madrid institution that stays open late.",
+   tip:"Late evening is a classic time to go.", q:"Chocolatería San Ginés Madrid", popular:false},
+  {id:"estanque-del-retiro", name:"Rowing boats at Retiro Pond", moods:["romantic","relax"], area:"Retiro", price:8, priceLabel:"About €8",
+   desc:"Hire a small rowing boat on the big pond in front of the Alfonso XII monument and drift for a while.",
+   tip:"Go in the late afternoon; boats are busiest at weekends.", q:"Estanque Grande del Retiro Madrid", popular:false},
+
+  {id:"el-capricho", name:"Parque El Capricho", moods:["hidden","nature"], area:"Alameda de Osuna", price:0, priceLabel:"Free",
+   desc:"A romantic 18th-century garden with a maze, a lake and little follies, far from the usual tourist route.",
+   tip:"It has limited opening days, so check before you travel.", q:"Parque de El Capricho Madrid", popular:false},
+  {id:"parque-de-las-siete-tetas", name:"Cerro del Tío Pío", moods:["hidden","romantic"], area:"Vallecas", price:0, priceLabel:"Free",
+   desc:"A hilly park known to locals as Siete Tetas, with wide views over the city at sunset.",
+   tip:"Bring a layer; the hilltop can be breezy.", q:"Parque Cerro del Tío Pío Madrid", popular:true},
+  {id:"museo-sorolla", name:"Museo Sorolla", moods:["hidden"], area:"Chamberí", price:3, priceLabel:"About €3",
+   desc:"The painter’s former home, kept almost as he left it, with a leafy garden at the back.",
+   tip:"There are free-entry slots at some times, so check the website.", q:"Museo Sorolla Madrid", popular:false},
+  {id:"cuesta-de-moyano", name:"Cuesta de Moyano", moods:["hidden"], area:"Atocha", price:0, priceLabel:"Free",
+   desc:"A slope of second-hand book stalls beside Retiro. Good for old novels, maps and cheap Spanish practice.",
+   tip:"Combine it with a walk in the park next door.", q:"Cuesta de Moyano Madrid", popular:false},
+
+  {id:"museo-del-prado-gratis", name:"Museo del Prado, free hours", moods:["free"], area:"Paseo del Prado", price:0, priceLabel:"Free in free-entry hours",
+   desc:"One of the world’s great art museums, free during set evening hours. Pick two or three rooms rather than everything.",
+   tip:"Check the current free-entry times and queue early.", q:"Museo del Prado Madrid", popular:false},
+  {id:"museo-reina-sofia-gratis", name:"Museo Reina Sofía, free hours", moods:["free"], area:"Atocha", price:0, priceLabel:"Free in free-entry hours",
+   desc:"Home to Picasso’s Guernica and a big modern art collection, with free-entry slots in the evening.",
+   tip:"It is closed on Tuesdays; check the current hours.", q:"Museo Reina Sofía Madrid", popular:false},
+  {id:"matadero-madrid", name:"Matadero Madrid", moods:["free"], area:"Arganzuela", price:0, priceLabel:"Free",
+   desc:"A former slaughterhouse turned arts centre, with exhibitions, performances and a lively courtyard.",
+   tip:"Check the programme; many shows are free.", q:"Matadero Madrid", popular:false},
+  {id:"plaza-mayor", name:"Plaza Mayor and the old town", moods:["free"], area:"Madrid de los Austrias", price:0, priceLabel:"Free",
+   desc:"Start at the arcaded Plaza Mayor and wander the old streets around it. A free first-day walk.",
+   tip:"Walk on from the square to Plaza de la Villa.", q:"Plaza Mayor Madrid", popular:false}
+];
+const BY_ID = Object.fromEntries(PLACES.map(p => [p.id, p]));
+
