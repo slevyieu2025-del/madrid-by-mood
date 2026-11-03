@@ -59,6 +59,16 @@ function art(key, moodId){
   }
   return svg;
 }
+function visual(p, moodId, eager){
+  const ph = PHOTOS[p.id];
+  if (!ph) return art(p.id, moodId);
+  return h("img", {src:ph.file, alt:ph.alt, width:1000, height:667, loading:eager ? "eager" : "lazy", decoding:"async"});
+}
+function creditLine(p){
+  const ph = PHOTOS[p.id];
+  if (!ph) return "Artwork is an original illustration.";
+  return h("span", {}, "Photo: " + ph.artist + ", ", ph.licenseUrl ? h("a", {href:ph.licenseUrl, target:"_blank", rel:"noopener noreferrer", text:ph.license}) : ph.license, ", via ", h("a", {href:ph.source, target:"_blank", rel:"noopener noreferrer", text:"Wikimedia Commons"}), " (opens in a new tab)." + (ph.note ? " " + ph.note : ""));
+}
 const heartIcon = () => { const v = s("svg",{viewBox:"0 0 24 24","aria-hidden":"true",focusable:"false"}); const p = s("path",{d:"M12 21s-7.5-4.6-9.6-9.2C.8 8.2 2.9 4.5 6.6 4.5c2 0 3.5 1.1 4.4 2.5.9-1.4 2.4-2.5 4.4-2.5 3.7 0 5.8 3.700 4.200 7.300C19.500 16.400 12 21 12 21z",fill:"none",stroke:"currentColor","stroke-width":"2","stroke-linejoin":"round"}); v.append(p); return v; };
 
 /* ---------- Saved places (localStorage, with fallback) ---------- */
@@ -101,7 +111,7 @@ function moodTag(id){ const t = h("span", {class:"tag", text:MOOD[id].name}); t.
 function card(p, mode){
   const m = p.moods[0];
   return h("article", {class:"card"},
-    h("div", {class:"pic"}, art(p.id, m)),
+    h("div", {class:"pic"}, visual(p, m)),
     h("div", {class:"body"},
       moodTag(m),
       h("h3", {}, h("a", {href:"#place-" + p.id, text:p.name})),
@@ -201,7 +211,7 @@ function viewPlace(id){
   return [
     h("a", {class:"back", href:back.href, text:"Back to " + back.label}),
     h("article", {class:"detail"},
-      h("div", {class:"pic"}, art(p.id, m)),
+      h("div", {class:"pic"}, visual(p, m, true)),
       h("div", {},
         h("div", {class:"tags"}, p.moods.map(x => { const a = h("a", {class:"tag", href:"#mood-" + x, text:MOOD[x].name}); a.style.background = MOOD[x].color; a.style.color = "var(--ink)"; return a; })),
         h("h1", {text:p.name}),
@@ -213,7 +223,7 @@ function viewPlace(id){
         h("div", {class:"actions"},
           saveBtn(p),
           h("a", {class:"btn", href:maps, target:"_blank", rel:"noopener noreferrer"}, "Get directions", h("span", {class:"sr-only", text:" (opens Google Maps in a new tab)"}))),
-        h("p", {class:"credit", text:"Directions open Google Maps in a new tab. Prices and opening times can change, so check before you go. Artwork is an original illustration; real photo credits will be listed on the About page."}))),
+        h("p", {class:"credit"}, creditLine(p), " Directions open Google Maps in a new tab. Prices and opening times can change, so check before you go."))),
     storageNote()
   ];
 }
@@ -244,7 +254,9 @@ function viewAbout(){
     h("div", {class:"facts"},
       h("div", {}, h("b", {text:"Curated, not complete"}), "This list has 24 places chosen by hand. It will grow over time but never aims to cover everything."),
       h("div", {}, h("b", {text:"Prices are approximate"}), "Costs, opening days and free-entry hours change. Confirm them before you go. “Free” in the mood bar means a price of zero."),
-      h("div", {}, h("b", {text:"Credits"}), "The artwork on this site is original and abstract. Real photos will be added with the photographer, licence and source recorded for each one.")),
+      h("div", {}, h("b", {text:"Credits"}), "The place photos come from Wikimedia Commons and are used under their Creative Commons or public-domain licences. The abstract artwork on the mood tiles is original.")),
+    h("section", {"aria-labelledby":"credH", style:"margin-top:40px"}, h("h2", {class:"h2", id:"credH", text:"Photo credits"}),
+      h("ul", {class:"credits"}, PLACES.filter(p => PHOTOS[p.id]).map(p => h("li", {}, h("b", {text:p.name + ": "}), creditLine(p))))),
     h("p", {style:"margin:40px 0 64px"}, h("a", {class:"btn", href:"#home", text:"Choose your mood"}))
   ];
 }

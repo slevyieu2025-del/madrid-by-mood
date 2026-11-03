@@ -15,7 +15,7 @@ Plain HTML, CSS and vanilla JavaScript. No libraries, no backend. Saved places u
 - `404.html` – page not found
 
 ## Credits and limits
-- Artwork is original abstract illustration. Add real photos with licence and credit before submitting.
+- Place photos are from Wikimedia Commons under Creative Commons or public-domain licences; photographer, licence and source for each are listed on the site's About page and in `js/data.js`. The Hammam Al Ándalus photo shows the Málaga branch, as no usable Madrid photo was found.
 - Prices and opening times are approximate and not live-checked.
 - The list is curated, not complete.
 
