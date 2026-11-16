@@ -151,8 +151,8 @@ h("section", {class:"section", "aria-labelledby":"weekH"},
     h("a", {class:"textlink", href:"#explore", text:"See every place"})),
   h("p", {class:"lede", text:"Three places I would recommend to someone new to Madrid."}),
   cardGrid([
-    BY_ID["templo-de-debod"],
-    BY_ID["el-rastro"],
+  BY_ID["palacio-de-cristal"],
+BY_ID["museo-del-prado-gratis"],
     BY_ID["cuesta-de-moyano"]
   ])),
 h("section", {class:"section", "aria-labelledby":"allH"},
