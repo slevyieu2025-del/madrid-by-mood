@@ -20,4 +20,4 @@ Plain HTML, CSS and vanilla JavaScript. No libraries, no backend. Saved places u
 - The list is curated, not complete.
 
 ## AI use
-Add your own honest log here: what AI generated, and what you changed or wrote yourself.
+I used AI as a coding-support and learning tool. It helped me understand HTML, CSS and JavaScript, troubleshoot issues, and explore possible ways to structure the website. I chose the project concept, visual direction, mood categories, places, images and written content. I also reviewed, edited and tested the final website myself.
