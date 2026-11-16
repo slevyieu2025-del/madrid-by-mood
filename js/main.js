@@ -145,7 +145,17 @@ function viewHome(){
     h("section", {class:"section", "aria-labelledby":"popH"},
       h("div", {class:"section-head"}, h("h2", {class:"h2", id:"popH", text:"Popular picks"}), h("a", {class:"textlink", href:"#explore", text:"See every place"})),
       cardGrid(pop)),
-    h("section", {class:"section", "aria-labelledby":"allH"},
+h("section", {class:"section", "aria-labelledby":"weekH"},
+  h("div", {class:"section-head"},
+    h("h2", {class:"h2", id:"weekH", text:"My first-week picks"}),
+    h("a", {class:"textlink", href:"#explore", text:"See every place"})),
+  h("p", {class:"lede", text:"Three places I would recommend to someone new to Madrid."}),
+  cardGrid([
+    BY_ID["templo-de-debod"],
+    BY_ID["el-rastro"],
+    BY_ID["cuesta-de-moyano"]
+  ])),
+h("section", {class:"section", "aria-labelledby":"allH"},
       h("div", {class:"everything"},
         h("h2", {class:"h2", id:"allH", text:"We guide everything for everyone"}),
         h("div", {},
