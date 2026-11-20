@@ -468,6 +468,9 @@ function viewAbout(){
       h("div", {}, h("b", {text:"Curated, not complete"}), "This list has 24 places chosen by hand. It will grow over time but never aims to cover everything."),
       h("div", {}, h("b", {text:"Prices are approximate"}), "Costs, opening days and free-entry hours change. Confirm them before you go. “Free” in the mood bar means a price of zero."),
       h("div", {}, h("b", {text:"Credits"}), "The place photos come from Wikimedia Commons and are used under their Creative Commons or public-domain licences. The abstract artwork on the mood tiles is original.")),
+       h("section", {"aria-labelledby":"aiH", style:"margin-top:40px"}, h("h2", {class:"h2", id:"aiH", text:"AI use"}),
+      h("div", {class:"prose", style:"margin-top:24px"},
+        h("p", {text:"I used AI as a coding-support and learning tool. It helped me understand HTML, CSS and JavaScript, troubleshoot issues, and explore possible ways to structure the website. I chose the project concept, visual direction, mood categories, places, images and written content. I also reviewed, edited and tested the final website myself."}))),
     h("section", {"aria-labelledby":"credH", style:"margin-top:40px"}, h("h2", {class:"h2", id:"credH", text:"Photo credits"}),
       h("ul", {class:"credits"}, PLACES.filter(p => PHOTOS[p.id]).map(p => h("li", {}, h("b", {text:p.name + ": "}), creditLine(p))))),
     h("p", {style:"margin:40px 0 64px"}, h("a", {class:"btn", href:"#home", text:"Choose your mood"}))
